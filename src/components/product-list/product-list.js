@@ -10,40 +10,6 @@ import { compose } from '../../utils'
 
 import './product-list.sass'
 
-// const ProductList = ({ products, onAddedToCart }) => {
-// 	return (
-// 		<>
-// 			{Object.values(products).map((items) => {
-// 				return (
-// 					<div className="product-list_wrapper">
-// 						<h2 className="product-list__title">{items.title}</h2>
-// 						<>
-// 							{Object.values(items).map((item) => {
-// 								if (typeof item === 'object') {
-// 									return (
-// 										<ul className="product-list">
-// 											{Object.values(item).map((product) => {
-// 												console.log(product)
-// 												return (
-// 													<li key={product.id}>
-// 														<ProductListItem
-// 															product={product}
-// 															onAddedToCart={() => onAddedToCart(product.id)} />
-// 													</li>
-// 												)
-// 											})}
-// 										</ul>
-// 									)
-// 								}
-// 							})}
-// 						</>
-// 					</div>
-// 				)
-// 			})
-// 			}
-// 		</>
-// 	)
-// }
 
 const ProductList = ({ filter, visibleAllItems, visibleFilterItems }) => {
 
@@ -119,9 +85,7 @@ class ProductListContainer extends Component {
 		if (error) {
 			return <ErrorIndicator />
 		}
-		console.log(products)
-		console.log(typeof products)
-		console.log(filter)
+
 
 		const visibleFilterItems = Object.values(products).map((items) => {
 

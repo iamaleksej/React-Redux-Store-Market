@@ -13,25 +13,25 @@ const updateProductList = (state, action) => {
 	switch (action.type) {
 		case 'FETCH_PRODUCTS_REQUEST':
 			return {
-				...state,
+				...state.productList,
 				loading: true
 			}
 
 		case 'FETCH_PRODUCTS_SUCCESS':
 			return {
-				...state,
+				...state.productList,
 				loading: false,
 				products: action.payload
 			}
 
 		case 'FETCH_PRODUCTS_FAILURE':
 			return {
-				...state,
+				...state.productList,
 				error: action.payload
 			}
 		case 'PRODUCTS_FILTERED':
 			return {
-				...state,
+				...state.productList,
 				filter: action.payload
 			}
 

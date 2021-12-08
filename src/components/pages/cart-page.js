@@ -7,7 +7,7 @@ import {
 } from '../../actions';
 import './cart-page.sass'
 
-const CartPage = ({ total, items, onIncrease, onDecrease, onDelete }) => {
+const CartPage = ({ totalPrice, cartItems, onIncrease, onDecrease, onDelete }) => {
 
 	const renderRow = (item) => {
 
@@ -40,21 +40,25 @@ const CartPage = ({ total, items, onIncrease, onDecrease, onDelete }) => {
 		<div className="cart">
 			<h1 className="cart__title">Корзина</h1>
 			<h2 className="cart__subtitle">
-				{items.length ? 'Ваш заказ' : 'Ваша корзина пуста'}
+				{cartItems.length ? 'Ваш заказ' : 'Ваша корзина пуста'}
 			</h2>
 			<div className="cart-products">
-				{Object.values(items).map(renderRow)}
+				{Object.values(cartItems).map(renderRow)}
 			</div>
-			{/* <h2>Стоимость: {total}</h2> */}
+			{console.log(totalPrice)}
+			<h2 className="cart__subtitle mt50px">
+				Общая стоимость: <span className="fw600 text_orange"> {totalPrice} </span> <span className="fw300">&#8381;</span>
+			</h2>
 		</div >
+
 
 	)
 }
 
-const mapStateToProps = ({ cart: { cartItems, orderTotal } }) => {
+const mapStateToProps = ({ cart: { cartItems, totalPrice } }) => {
 	return {
-		items: cartItems,
-		total: orderTotal
+		cartItems,
+		totalPrice
 	}
 }
 

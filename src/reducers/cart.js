@@ -1,4 +1,5 @@
 
+
 const updateCartItems = (cartItems, item, idx) => {
 
 	if (item.count === 0) {
@@ -41,6 +42,14 @@ const updateCartItem = (product, item = {}, quantity) => {
 	}
 }
 
+const updateTotalPrice = (cartItems) => {
+
+	if (cartItems.length) {
+		return cartItems.reduce((acc, item) => acc + item.price, 0)
+	}
+
+}
+
 const updateOrder = (state, productId, quantity) => {
 	const { productList: { products }, cart: { cartItems } } = state;
 	let newItem, myProduct;
@@ -61,16 +70,17 @@ const updateOrder = (state, productId, quantity) => {
 			})
 		)
 	})
-
+	console.log(cartItems);
 	const itemIndex = cartItems.findIndex(({ id }) => id === productId);
 	const item = cartItems[itemIndex];
-
-	newItem = updateCartItem(myProduct, item, quantity)
+	newItem = updateCartItem(myProduct, item, quantity);
 
 	return {
-		...state,
-		cartItems: updateCartItems(cartItems, newItem, itemIndex)
+		cartItems: updateCartItems(cartItems, newItem, itemIndex),
+		totalPrice: updateTotalPrice(cartItems),
+		totalQuantity: 0
 	}
+
 }
 
 const updateCart = (state, action) => {
@@ -78,7 +88,8 @@ const updateCart = (state, action) => {
 	if (state === undefined) {
 		return {
 			cartItems: [],
-			orderTotal: 0
+			totalPrice: 0,
+			totalQuantity: 0
 		}
 	}
 
