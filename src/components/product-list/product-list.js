@@ -3,10 +3,10 @@ import ProductListItem from '../product-list-item/product-list-item';
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
 
-import { withStoreService } from '../hoc'
+import { withStoreService } from '../hoc';
 import { productsLoaded, productsRequested, productsError, productAddedToCart } from "../../actions";
 import { connect } from "react-redux";
-import { compose } from '../../utils'
+import { compose } from '../../utils';
 
 import './product-list.sass'
 
@@ -86,7 +86,6 @@ class ProductListContainer extends Component {
 			return <ErrorIndicator />
 		}
 
-
 		const visibleFilterItems = Object.values(products).map((items) => {
 
 			if (items.category === filter) {
@@ -128,7 +127,6 @@ class ProductListContainer extends Component {
 								return (
 									<ul className="product-list">
 										{Object.values(item).map((product) => {
-											// console.log(product)
 											return (
 												<li key={product.id}>
 													<ProductListItem

@@ -47,6 +47,12 @@ const onFilterChange = (filter) => {
 	}
 }
 
+const onSendOrder = () => {
+	return {
+		type: 'ORDER_SEND',
+	}
+}
+
 export {
 	productsLoaded,
 	productsRequested,

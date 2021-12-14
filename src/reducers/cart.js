@@ -1,5 +1,4 @@
 
-
 const updateCartItems = (cartItems, item, idx) => {
 
 	if (item.count === 0) {
@@ -42,13 +41,7 @@ const updateCartItem = (product, item = {}, quantity) => {
 	}
 }
 
-const updateTotalPrice = (cartItems) => {
-
-	if (cartItems.length) {
-		return cartItems.reduce((acc, item) => acc + item.price, 0)
-	}
-
-}
+let newTotalPrice = 0, newTotalQuantity = 0;
 
 const updateOrder = (state, productId, quantity) => {
 	const { productList: { products }, cart: { cartItems } } = state;
@@ -70,15 +63,31 @@ const updateOrder = (state, productId, quantity) => {
 			})
 		)
 	})
-	console.log(cartItems);
+
 	const itemIndex = cartItems.findIndex(({ id }) => id === productId);
 	const item = cartItems[itemIndex];
 	newItem = updateCartItem(myProduct, item, quantity);
 
+	const updateTotalPrice = (newItem, quantity) => {
+
+		if (newItem.count === 0) {
+			return newTotalPrice += myProduct.price * quantity;
+		}
+		else {
+			return newTotalPrice += newItem.price / newItem.count * quantity;
+		}
+	}
+
+	const updateTotalQuantity = (quantity) => {
+
+		return newTotalQuantity += quantity;
+
+	}
+
 	return {
 		cartItems: updateCartItems(cartItems, newItem, itemIndex),
-		totalPrice: updateTotalPrice(cartItems),
-		totalQuantity: 0
+		totalPrice: updateTotalPrice(newItem, quantity),
+		totalQuantity: updateTotalQuantity(quantity)
 	}
 
 }
@@ -90,12 +99,13 @@ const updateCart = (state, action) => {
 			cartItems: [],
 			totalPrice: 0,
 			totalQuantity: 0
+
 		}
 	}
 
 	switch (action.type) {
 		case 'PRODUCT_ADDED_TO_CART':
-			return updateOrder(state, action.payload, 1);
+			return updateOrder(state, action.payload, 1)
 
 		case 'PRODUCT_REMOVED_FROM_CART':
 			return updateOrder(state, action.payload, -1);
@@ -103,6 +113,9 @@ const updateCart = (state, action) => {
 		case 'ALL_PRODUCT_REMOVED_FROM_CART':
 			const item = state.cart.cartItems.find(({ id }) => id === action.payload)
 			return updateOrder(state, action.payload, -item.count)
+
+		// case 'ORDER_SEND':
+		// 	return sendOrder();
 
 		default:
 			return state.cart

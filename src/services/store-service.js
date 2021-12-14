@@ -1,4 +1,7 @@
+import React from 'react';
 import firebase from 'firebase/compat/app';
+import { connect } from 'react-redux';
+import { getDatabase, ref, set } from "firebase/database";
 import 'firebase/compat/database';
 
 
@@ -22,7 +25,6 @@ class storeService {
 		this.database = this.firebase.database();
 	}
 
-
 	getProducts = (CB) => {
 		this.database
 			.ref('/storeData/')
@@ -32,6 +34,33 @@ class storeService {
 			})
 	}
 
+	getClientData = ({ clientName, clientAdress, clientPhone }) => {
+		let userId = 1;
+		const { cartItems, totalPrice } = this.props;
+		const getDB = getDatabase();
+		let refClientData = ref(getDB, 'clientData/order' + userId);
+
+		set(refClientData, {
+			clientname: clientName,
+			clientphone: clientPhone,
+			clientadress: clientAdress,
+			totalprice: totalPrice,
+			cartitems: cartItems
+		})
+	}
 }
 
-export default storeService;
+const mapStateToProps = ({
+	cart: {
+		cartItems,
+		totalPrice } }) => {
+
+	return {
+		cartItems,
+		totalPrice
+	}
+}
+
+export default
+	// storeService;
+	connect(mapStateToProps)(storeService);
