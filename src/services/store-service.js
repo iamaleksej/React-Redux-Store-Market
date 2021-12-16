@@ -1,9 +1,11 @@
-import React from 'react';
 import firebase from 'firebase/compat/app';
-import { connect } from 'react-redux';
 import { getDatabase, ref, set } from "firebase/database";
 import 'firebase/compat/database';
-
+import {
+	getAuth,
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword
+} from "firebase/auth";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyClbTF7AS0ZDhMBpwUsZpPGSil-blSQfTw",
@@ -16,7 +18,6 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-
 
 class storeService {
 
@@ -34,13 +35,9 @@ class storeService {
 			})
 	}
 
-	getClientData = ({ clientName, clientAdress, clientPhone }) => {
-		let userId = 1;
-		const { cartItems, totalPrice } = this.props;
+	setOrderData = ({ clientName, clientAdress, clientPhone }, cartItems, totalPrice) => {
 		const getDB = getDatabase();
-		let refClientData = ref(getDB, 'clientData/order' + userId);
-
-		set(refClientData, {
+		set(ref(getDB, 'clientData/order'), {
 			clientname: clientName,
 			clientphone: clientPhone,
 			clientadress: clientAdress,
@@ -48,19 +45,27 @@ class storeService {
 			cartitems: cartItems
 		})
 	}
-}
 
-const mapStateToProps = ({
-	cart: {
-		cartItems,
-		totalPrice } }) => {
+	setRegData = ({ email, password }) => {
+		const auth = getAuth();
 
-	return {
-		cartItems,
-		totalPrice
+		createUserWithEmailAndPassword(auth, email, password)
+			.then((userCredential) => {
+				const user = userCredential.user;
+			})
+			.catch(error => console.log(error.code))
+	}
+
+	setSignInData = ({ email, password }) => {
+		const auth = getAuth();
+
+		signInWithEmailAndPassword(auth, email, password)
+			.then((userCredential) => {
+				const user = userCredential.user;
+			})
+			.catch(error => console.log(error))
 	}
 }
 
-export default
-	// storeService;
-	connect(mapStateToProps)(storeService);
+
+export default storeService;

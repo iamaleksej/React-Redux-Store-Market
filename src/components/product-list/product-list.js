@@ -12,45 +12,7 @@ import './product-list.sass'
 
 
 const ProductList = ({ filter, visibleAllItems, visibleFilterItems }) => {
-
-	switch (filter) {
-		case 'burgers':
-			return (
-				<>
-					{visibleFilterItems}
-				</>
-			)
-		case 'drinks':
-			return (
-				<>
-					{visibleFilterItems}
-				</>
-			)
-		case 'salads':
-			return (
-				<>
-					{visibleFilterItems}
-				</>
-			)
-		case 'sauces':
-			return (
-				<>
-					{visibleFilterItems}
-				</>
-			)
-		case 'snacks':
-			return (
-				<>
-					{visibleFilterItems}
-				</>
-			)
-		default:
-			return (
-				<>
-					{visibleAllItems}
-				</>
-			)
-	}
+	return filter !== 'all' ? visibleFilterItems : visibleAllItems
 }
 
 class ProductListContainer extends Component {
@@ -66,8 +28,6 @@ class ProductListContainer extends Component {
 		storeService.getProducts(productsLoaded);
 		productsError();
 	}
-
-
 
 	render() {
 

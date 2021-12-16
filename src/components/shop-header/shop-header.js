@@ -1,17 +1,23 @@
 import React from 'react';
 import { connect } from "react-redux";
-import './shop-header.sass';
+import { withStoreService } from '../hoc';
+import { compose } from '../../utils';
 import { Link } from "react-router-dom";
+import Login from '../login';
+import './shop-header.sass';
 
 const ShopHeader = ({ totalQuantity, totalPrice }) => {
 
 
+
 	return (
 		<header className="header">
-			<Link to="/" className="header__logo">
-				Store Project
-			</Link>
-
+			<div className="header__logo-login">
+				<Link to="/" className="header__logo">
+					Store Project
+				</Link>
+				<Login />
+			</div>
 			<Link to="/cart" className="header__cart">
 				<span className="header__cart-numbers"> {totalQuantity} </span>
 				( <span className="header__cart-numbers">{totalPrice}</span> &#8381; )
@@ -30,4 +36,7 @@ const mapStateToProps = ({ cart: { totalPrice, totalQuantity } }) => {
 	}
 }
 
-export default connect(mapStateToProps)(ShopHeader)
+export default compose(
+	withStoreService(),
+	connect(mapStateToProps)
+)(ShopHeader)

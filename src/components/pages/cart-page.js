@@ -20,20 +20,6 @@ const CartPage = ({
 	onDelete,
 	storeService }) => {
 
-	// const state = {
-	// 	clientName: '',
-	// 	clientAdress: '',
-	// 	clientPhone: ''
-	// }
-
-	// const writeUserData = (userId, name, email, imageUrl) => {
-	// 	const db = getDatabase();
-	// 	set(ref(db, 'users/' + userId), {
-	// 		username: name,
-	// 		email: email,
-	// 		profile_picture: imageUrl
-	// 	});
-	// }
 
 	const [clientData, setClientData] = useState({
 		clientName: null,
@@ -49,15 +35,14 @@ const CartPage = ({
 	}
 
 	const sendClientData = async () => {
-		console.log(clientData)
 		try {
-			await storeService.getClientData(clientData, cartItems, totalPrice);
+			await storeService.setOrderData(clientData, cartItems, totalPrice);
 		}
 		catch (error) {
 			console.log(error)
 		}
-
 	}
+
 
 
 
