@@ -91,19 +91,19 @@ const CartPage = ({
 					type="text"
 					id="clientName"
 					placeholder="Имя"
-					className="client-data__name"
+					className="client-data__item client-data__name"
 					onChange={handleChange} />
 				<input
 					type="text"
 					id="clientAdress"
 					placeholder="Адрес"
-					className="client-data__adress"
+					className="client-data__item client-data__adress"
 					onChange={handleChange} />
 				<input
 					type="phone"
 					id="clientPhone"
 					placeholder="Телефон"
-					className="client-data__phone"
+					className="client-data__item client-data__phone"
 					onChange={handleChange} />
 				<p className="client-data__price">Стоимость заказа: {totalPrice} &#8381;</p>
 				<button type="submit"
