@@ -13,7 +13,7 @@ const ShopHeader = ({ totalQuantity, totalPrice }) => {
 	return (
 		<header className="header">
 			<div className="header__logo-login">
-				<Link to="/" className="header__logo">
+				<Link to="/React-Redux-Store-Market/" className="header__logo">
 					Store Project
 				</Link>
 				<Login />
