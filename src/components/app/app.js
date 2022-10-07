@@ -17,7 +17,7 @@ export default class App extends React.Component {
 				<ShopHeader />
 				<Routes>
 					<Route
-						path="/"
+						path="/React-Redux-Store-Market/"
 						element={<HomePage />}
 					/>
 					<Route
